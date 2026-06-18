@@ -26,6 +26,18 @@ function bindBoardEvents() {
   prepareBoardInlineMusicPlayer();
 }
 
+function setBoardLoading(isLoading, message = "처리 중입니다...") {
+  const overlay = document.getElementById("boardLoadingOverlay");
+  const text = document.getElementById("boardLoadingOverlayText");
+
+  if (!overlay) return;
+  if (text) text.textContent = message;
+
+  overlay.classList.toggle("is-hidden", !isLoading);
+  overlay.setAttribute("aria-hidden", isLoading ? "false" : "true");
+  document.body.classList.toggle("is-board-loading", isLoading);
+}
+
 async function handleBoardWindowFocus() {
   if (document.body.dataset.page !== "board") return;
 
@@ -396,6 +408,7 @@ async function handleBoardDeleteClick() {
   if (!window.confirm(`"${letter.title}" 게시물을 삭제할까요?`)) return;
 
   try {
+    setBoardLoading(true, "게시물을 삭제하는 중입니다...");
     await deletePostInSupabase(letter);
     await loadPosts();
     state.selectedLetterId = null;
@@ -408,6 +421,8 @@ async function handleBoardDeleteClick() {
     if (!recovered) {
       alert(error?.message || "게시물 삭제 중 오류가 발생했습니다.");
     }
+  } finally {
+    setBoardLoading(false);
   }
 }
 
@@ -445,6 +460,8 @@ async function handleBoardPostSave(event) {
   let uploadedPaths = [];
 
   try {
+    setBoardLoading(true, idInput.value ? "게시물을 수정하는 중입니다..." : "게시물을 등록하는 중입니다...");
+
     if (submitButton) {
       submitButton.disabled = true;
       submitButton.textContent = "saving...";
@@ -497,6 +514,7 @@ async function handleBoardPostSave(event) {
       alert(error?.message || "게시물 저장 중 오류가 발생했습니다.");
     }
   } finally {
+    setBoardLoading(false);
     if (submitButton) {
       submitButton.disabled = false;
       submitButton.textContent = "저장";

@@ -189,6 +189,13 @@
 
   <button id="boardCreateButton" type="button" class="solid-button board-floating-create is-hidden">등록</button>
 
+  <div id="boardLoadingOverlay" class="board-loading-overlay is-hidden" role="status" aria-live="polite" aria-hidden="true">
+    <div class="board-loading-overlay__panel">
+      <span class="board-loading-overlay__spinner" aria-hidden="true"></span>
+      <span id="boardLoadingOverlayText">처리 중입니다...</span>
+    </div>
+  </div>
+
   <script>
     window.__SUPABASE_CONFIG__ = {
       url: "https://ifwgerzulrvuapltmqzt.supabase.co",

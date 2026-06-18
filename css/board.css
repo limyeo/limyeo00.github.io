@@ -451,7 +451,7 @@
 }
 
 .board-editor .admin-field {
-  grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
+  grid-template-columns: minmax(120px, 120px) minmax(0, 1fr);
   align-items: center;
   gap: 12px 16px;
 }
@@ -517,5 +517,56 @@
 
   .board-editor .admin-helper-text {
     grid-column: 1;
+  }
+}
+
+.board-loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.board-loading-overlay:not(.is-hidden) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.board-loading-overlay__panel {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 220px;
+  padding: 18px 22px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 60px rgba(17, 17, 17, 0.16);
+  color: #111111;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.board-loading-overlay__spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 3px solid rgba(17, 17, 17, 0.12);
+  border-top-color: #111111;
+  animation: board-loading-spin 780ms linear infinite;
+}
+
+@keyframes board-loading-spin {
+  to {
+    transform: rotate(360deg);
   }
 }

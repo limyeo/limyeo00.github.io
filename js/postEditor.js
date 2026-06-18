@@ -180,8 +180,15 @@ function addBlock(type = "text", value = "", storagePath = "", imageSource = "ur
     const currentFileName = storagePath ? storagePath.split("/").pop() : "";
 
     blockElement.innerHTML = `
-      <div class="block-item__head">
+      <div class="block-item__head block-item__head--image">
         <h4 class="block-item__title">이미지</h4>
+        <div class="block-item__control">
+          ${
+            isFileBlock
+              ? `<input class="admin-input block-file-input" type="file" accept="image/*" />`
+              : `<input class="admin-input block-image-input" type="url" placeholder="https://..." value="${escapeHtmlForAttribute(value)}" />`
+          }
+        </div>
         <div class="block-item__actions">
           ${renderBlockActionButton("up")}
           ${renderBlockActionButton("down")}
@@ -191,13 +198,8 @@ function addBlock(type = "text", value = "", storagePath = "", imageSource = "ur
 
       ${
         isFileBlock
-          ? `
-            <input class="admin-input block-file-input" type="file" accept="image/*" />
-            <p class="block-item__file-name">${currentFileName ? `현재 저장된 파일: ${escapeHtml(currentFileName)}` : ""}</p>
-          `
-          : `
-            <input class="admin-input block-image-input" type="url" placeholder="https://..." value="${escapeHtmlForAttribute(value)}" />
-          `
+          ? `<p class="block-item__file-name">${currentFileName ? `현재 저장된 파일: ${escapeHtml(currentFileName)}` : ""}</p>`
+          : ""
       }
 
       <div class="block-item__preview ${value ? "" : "is-hidden"}">
