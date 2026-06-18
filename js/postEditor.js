@@ -177,7 +177,6 @@ function addBlock(type = "text", value = "", storagePath = "", imageSource = "ur
 
   if (type === "image") {
     const isFileBlock = blockElement.dataset.imageSource === "file";
-    const badgeLabel = isFileBlock ? "파일 업로드" : "URL 등록";
     const currentFileName = storagePath ? storagePath.split("/").pop() : "";
 
     blockElement.innerHTML = `
@@ -188,10 +187,6 @@ function addBlock(type = "text", value = "", storagePath = "", imageSource = "ur
           ${renderBlockActionButton("down")}
           ${renderBlockActionButton("remove", "outline-button")}
         </div>
-      </div>
-
-      <div class="block-item__meta">
-        <span class="block-item__badge">${badgeLabel}</span>
       </div>
 
       ${
